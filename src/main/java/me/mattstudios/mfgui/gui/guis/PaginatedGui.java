@@ -428,7 +428,7 @@ public class PaginatedGui extends BaseGui {
      *
      * @return The page size
      */
-    int getPageSize() {
+    public int getPageSize() {
         return pageSize;
     }
 
@@ -471,6 +471,22 @@ public class PaginatedGui extends BaseGui {
         }
 
         return counter;
+    }
+
+    public PaginatedGui clone() {
+        PaginatedGui gui = new PaginatedGui(getRows(), getTitle());
+        getGuiItems().forEach((slot, guiItem) -> {
+            GuiItem cloneItem = new GuiItem(guiItem.getItemStack().clone());
+            cloneItem.setAction(guiItem.getAction());
+            gui.setItem(slot, cloneItem);
+        });
+
+        getPageItems().forEach(guiItem -> {
+            GuiItem cloneItem = new GuiItem(guiItem.getItemStack().clone());
+            cloneItem.setAction(guiItem.getAction());
+            gui.addItem(cloneItem);
+        });
+        return gui;
     }
 
 }
